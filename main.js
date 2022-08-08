@@ -1,12 +1,10 @@
 import $ from "jquery";
 
-console.log($);
-
 // program to shuffle the deck of cards
 
 // declare card elements
 let deck = [
-  { Value: "Ace", Suit: "Spades" },
+  { Value: "A", Suit: "Spades" },
   { Value: "2", Suit: "Spades" },
   { Value: "3", Suit: "Spades" },
   { Value: "4", Suit: "Spades" },
@@ -16,10 +14,10 @@ let deck = [
   { Value: "8", Suit: "Spades" },
   { Value: "9", Suit: "Spades" },
   { Value: "10", Suit: "Spades" },
-  { Value: "Jack", Suit: "Spades" },
-  { Value: "Queen", Suit: "Spades" },
-  { Value: "King", Suit: "Spades" },
-  { Value: "Ace", Suit: "Diamonds" },
+  { Value: "J", Suit: "Spades" },
+  { Value: "Q", Suit: "Spades" },
+  { Value: "K", Suit: "Spades" },
+  { Value: "A", Suit: "Diamonds" },
   { Value: "2", Suit: "Diamonds" },
   { Value: "3", Suit: "Diamonds" },
   { Value: "4", Suit: "Diamonds" },
@@ -29,10 +27,10 @@ let deck = [
   { Value: "8", Suit: "Diamonds" },
   { Value: "9", Suit: "Diamonds" },
   { Value: "10", Suit: "Diamonds" },
-  { Value: "Jack", Suit: "Diamonds" },
-  { Value: "Queen", Suit: "Diamonds" },
-  { Value: "King", Suit: "Diamonds" },
-  { Value: "Ace", Suit: "Club" },
+  { Value: "J", Suit: "Diamonds" },
+  { Value: "Q", Suit: "Diamonds" },
+  { Value: "K", Suit: "Diamonds" },
+  { Value: "A", Suit: "Club" },
   { Value: "2", Suit: "Club" },
   { Value: "3", Suit: "Club" },
   { Value: "4", Suit: "Club" },
@@ -42,10 +40,10 @@ let deck = [
   { Value: "8", Suit: "Club" },
   { Value: "9", Suit: "Club" },
   { Value: "10", Suit: "Club" },
-  { Value: "Jack", Suit: "Club" },
-  { Value: "Queen", Suit: "Club" },
-  { Value: "King", Suit: "Club" },
-  { Value: "Ace", Suit: "Heart" },
+  { Value: "J", Suit: "Club" },
+  { Value: "Q", Suit: "Club" },
+  { Value: "K", Suit: "Club" },
+  { Value: "A", Suit: "Heart" },
   { Value: "2", Suit: "Heart" },
   { Value: "3", Suit: "Heart" },
   { Value: "4", Suit: "Heart" },
@@ -55,12 +53,20 @@ let deck = [
   { Value: "8", Suit: "Heart" },
   { Value: "9", Suit: "Heart" },
   { Value: "10", Suit: "Heart" },
-  { Value: "Jack", Suit: "Heart" },
-  { Value: "Queen", Suit: "Heart" },
-  { Value: "King", Suit: "Heart" },
+  { Value: "J", Suit: "Heart" },
+  { Value: "Q", Suit: "Heart" },
+  { Value: "K", Suit: "Heart" },
   { Value: "Joker", Suit: "Black" },
   { Value: "Joker", Suit: "Red" },
 ];
+
+let players = [
+  { name: "P1", hand: [] },
+  { name: "P2", hand: [] },
+  { name: "P3", hand: [] },
+];
+
+let landlordCards = [];
 
 //shuffle of cards
 const shuffle = () => {
@@ -72,11 +78,35 @@ const shuffle = () => {
   }
 };
 
-console.log("The first five cards are:");
-
-// display 5 results
-for (let i = 0; i < 5; i++) {
-  console.log(`${deck[i].Value} of ${deck[i].Suit}`);
-}
-
+shuffle();
 console.log(deck);
+
+// deal cards to players
+
+console.log(deck[0]);
+
+const deal = () => {
+  let bonusCards = deck.pop();
+  landlordCards.push(bonusCards);
+  bonusCards = deck.pop();
+  landlordCards.push(bonusCards);
+  bonusCards = deck.pop();
+  landlordCards.push(bonusCards);
+  // console.log(deck, "51");
+  // console.log(landlordCards, "landlord");
+
+  for (let cards = 0; cards - 14 < deck.length; cards++) {
+    for (let dealt = 0; dealt < players.length; dealt++) {
+      players[dealt].hand.push(deck[0]);
+      deck.shift();
+      console.log(deck.length);
+    }
+  }
+};
+
+deal();
+console.log(players[0]);
+console.log(players[1]);
+console.log(players[2]);
+
+console.log(landlordCards);
