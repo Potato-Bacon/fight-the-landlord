@@ -28,235 +28,242 @@ top: 200px
     height: 100px;
 }
 
-#aceSpade {
+#SpadesA {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Ace_of_spades.png);
 }
 
 
-#twoSpade {
+#Spades2{
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_2_of_spades.png);
 }
 
-#threeSpade {
+#Spades3{
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_3_of_spades.png);
 }
 
 
-#fourSpade {
+#Spades4 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_4_of_spades.png);
 }
 
-#fiveSpade {
+#Spades5 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_5_of_spades.png);
 }
 
-#sixSpade {
+#Spades6 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_6_of_spades.png);
 
 }
 
-#sevenSpade {
+#Spades7{
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_7_of_spades.png);
 
 }
 
-#eightSpade {
+#Spades8 {
 
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_8_of_spades.png);
 }
 
-#nineSpade {
+#Spades9 {
 
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_9_of_spades.png);
 }
 
-#tenSpade {
+#Spades10 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_10_of_spades.png);
 }
 
-#jackSpade {
+#SpadesJ {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Jack_of_spades.png);
 }
 
-#queenSpade {
+#SpadesQ {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Queen_of_spades.png);
 }
 
-#kingSpade {
-    background-image: url(https://freesvg.org/img/nicubunu_White_deck_Queen_of_spades.png);
+#SpadesK {
+    background-image: url(https://freesvg.org/img/nicubunu_White_deck_King_of_spades.png);
 }
 
 /* ------------------------------------ */
-#aceHeart {
+#HeartA {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Ace_of_hearts.png);
 }
 
-#twoHeart {
+#Heart2 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_2_of_hearts.png);
 }
 
-#threeHeart {
+#Heart3 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_3_of_hearts.png);
 
 }
 
-#fourHeart {
+#Heart4 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_4_of_hearts.png);
 
 }
 
-#fiveHeart {
+#Heart5 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_5_of_hearts.png)
 }
 
-#sixHeart {
+#Heart6 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_6_of_hearts.png)
 }
 
-#sevenHeart {
+#Heart7 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_7_of_hearts.png)
 }
 
-#eightHeart {
+#Heart8 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_8_of_hearts.png)
 }
 
-#nineHeart {
+#Heart9 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_9_of_hearts.png)
 }
 
-#tenHeart {
+#Heart10 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_10_of_hearts.png)
 }
 
-#jackHeart {
+#HeartJ {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Jack_of_hearts.png)
 }
 
-#queenHeart {
+#HeartQ {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Queen_of_hearts.png)
 }
 
-#kingHeart {
+#HeartK {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_King_of_hearts.png)
 }
 
 /* ------------------------------------ */
 
-#aceDiamond {
+#DiamondsA {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Ace_of_diamonds.png);
 }
 
-#twoDiamond{
+#Diamonds2{
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_2_of_diamonds.png);
 }
 
-#threeDiamond {
+#Diamonds3 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_3_of_diamonds.png);
 
 }
 
-#fourDiamond{
+#Diamonds4{
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_4_of_diamonds.png);
 
 }
 
-#fiveDiamond {
+#Diamonds5 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_5_of_diamonds.png)
 }
 
-#sixDiamond {
+#Diamonds6 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_6_of_diamonds.png)
 }
 
-#sevenDiamond{
+#Diamonds7{
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_7_of_diamonds.png)
 }
 
-#eightDiamond{
+#Diamonds8{
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_8_of_diamonds.png)
 }
 
-#nineDiamond {
+#Diamonds9 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_9_of_diamonds.png)
 }
 
-#tenDiamond {
+#Diamonds10 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_10_of_diamonds.png)
 }
 
-#jackDiamond {
-    background-image: url(https://freesvg.org/img/nicubunu_White_deck_Jack_of_diamonds.png)
+#DiamondsJ {
+    background-image: url(https://freesvg.org/img/nicubunu_White_deck_Jack_of_diamonds.png) 
 }
 
-#queenDiamond {
+#DiamondsQ {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Queen_of_diamonds.png)
 }
 
-#kingDiamond{
+#DiamondsK{
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_King_of_diamonds.png)
 }
 
 /* ------------------------------------ */
 
-#aceClub{
+#ClubA{
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Ace_of_clubs.png);
 }
 
-#twoClub {
+#Club2 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_2_of_clubs.png);
 }
 
-#threeClub{
+#Club3{
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_3_of_clubs.png);
 
 }
 
-#fourClub{
+#Club4{
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_4_of_clubs.png);
 
 }
 
-#fiveClub{
+#Club5{
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_5_of_clubs.png)
 }
 
-#sixClub {
+#Club6 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_6_of_clubs.png)
 }
 
-#sevenClub{
+#Club7{
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_7_of_clubs.png)
 }
 
-#eightClub{
+#Club8{
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_8_of_clubs.png)
 }
 
-#nineClub {
+#Club9 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_9_of_clubs.png)
 }
 
-#tenClub{
+#Club10{
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_10_of_clubs.png)
 }
 
-#jackClub {
+#ClubJ {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Jack_of_clubs.png)
 }
 
-#queenClub {
+#ClubQ {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Queen_of_clubs.png)
 }
 
-#kingClub{
+#ClubK{
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_King_of_clubs.png)
 }
 
-#jokerBlack {
+#BlackJoker {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Black_Joker.png)
 }
 
-#jokerRed {
+#RedJoker {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Red_Joker.png)
+}
+
+.back {
+    background-size : cover;
+    width: 100px;
+    height: 100px;
+    background-image: url(https://freesvg.org/img/nicubunu_Card_backs_grid_blue.png);
 }

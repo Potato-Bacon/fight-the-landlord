@@ -1,7 +1,5 @@
 import $ from "jquery";
 
-// program to shuffle the deck of cards
-
 // declare card elements
 let deck = [
   { Value: "A", Suit: "Spades" },
@@ -60,12 +58,14 @@ let deck = [
   { Value: "Joker", Suit: "Red" },
 ];
 
+// number of players
 let players = [
   { name: "P1", hand: [] },
   { name: "P2", hand: [] },
   { name: "P3", hand: [] },
 ];
 
+//placeholder for bonus card which will be given to landlord player after bidding phase
 let landlordCards = [];
 
 //shuffle of cards
@@ -83,8 +83,6 @@ console.log(deck);
 
 // deal cards to players
 
-console.log(deck[0]);
-
 const deal = () => {
   let bonusCards = deck.pop();
   landlordCards.push(bonusCards);
@@ -92,14 +90,11 @@ const deal = () => {
   landlordCards.push(bonusCards);
   bonusCards = deck.pop();
   landlordCards.push(bonusCards);
-  // console.log(deck, "51");
-  // console.log(landlordCards, "landlord");
 
   for (let cards = 0; cards - 14 < deck.length; cards++) {
     for (let dealt = 0; dealt < players.length; dealt++) {
       players[dealt].hand.push(deck[0]);
       deck.shift();
-      console.log(deck.length);
     }
   }
 };
@@ -110,3 +105,55 @@ console.log(players[1]);
 console.log(players[2]);
 
 console.log(landlordCards);
+
+//displaying cards for players
+const dealtCards = () => {
+  const playerOne = players[0].hand;
+  const playerTwo = players[1].hand;
+  const playerThree = players[2].hand;
+
+  for (const card of playerOne) {
+    let $card = $("<div>")
+      .addClass("card")
+      .attr("id", card.Suit + card.Value);
+    console.log($card, "hi");
+    let $handCard = $("#hand1").append($card);
+    $("<button>").append($handCard);
+
+    console.log("button has been selected");
+  }
+
+  for (const card of playerTwo) {
+    let $card = $("<div>")
+      .addClass("card")
+      .attr("id", card.Suit + card.Value);
+    $("#hand2").append($card);
+  }
+
+  for (const card of playerThree) {
+    let $card = $("<div>")
+      .addClass("card")
+      .attr("id", card.Suit + card.Value);
+
+    $("#hand3").append($card);
+  }
+
+  for (const card of landlordCards) {
+    let $card = $("<div>").addClass("card").addClass("back");
+    console.log($card, "hi");
+    $(".landlord").append($card);
+  }
+};
+dealtCards();
+
+const biddingPhase = () => {
+  const $bidOne = $("<button>").text(1);
+  const $bidTwo = $("<button>").text(2);
+  const $bidThree = $("<button>").text(3);
+
+  $(".bidphase").append($bidOne);
+  $(".bidphase").append($bidTwo);
+  $(".bidphase").append($bidThree);
+};
+
+biddingPhase();
