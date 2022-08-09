@@ -1,18 +1,18 @@
 .player1 {
     position: absolute;
-    top: 500px;
-    left: 500px
+    top: 800px;
+    left: 300px
 }
 .player2 {
     position:absolute;
-    top: 200px
+    top: 150px
     
 
 }
 .player3 {
 position: absolute;
-left: 1000px;
-top: 200px
+left: 1200px;
+top: 150px
 }
 
 .landlord {
@@ -22,11 +22,38 @@ top: 200px
 }
 
 
-.card {
+#hand1 {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.P1front {
     background-size : cover;
     width: 100px;
     height: 100px;
+    margin-right: -60px;
 }
+
+.P2front {
+    background-size : cover;
+    width: 100px;
+    height: 100px;
+    margin-top: -50px;
+    transform: rotate(0.25turn);
+
+}
+
+.P3front {
+    background-size : cover;
+    width: 100px;
+    height: 100px;
+    margin-top: -50px;
+    transform: rotate(0.75turn);
+
+}
+
+
 
 #SpadesA {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Ace_of_spades.png);
@@ -261,9 +288,6 @@ top: 200px
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Red_Joker.png)
 }
 
-.back {
-    background-size : cover;
-    width: 100px;
-    height: 100px;
-    background-image: url(https://freesvg.org/img/nicubunu_Card_backs_grid_blue.png);
+.back, .P1back, .P2back, .P3back {
+    background-image: url(https://freesvg.org/img/nicubunu_Card_backs_grid_blue.png) !important
 }

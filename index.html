@@ -8,24 +8,24 @@
     <title>Fight the landlord</title>
   </head>
   <body>
-    <h1>Fight the landlord</h1>
+    <h1>Fight the Landlord</h1>
     
     <div class = "player1"> player1
       <div class = "playarea">play area</div>
-      <div class = "handcards" id = "hand1">hand</div>
-      <div class = "cardleft">card counter : <span>17</span></div>
+      <div class = "handcards" id = "hand1"></div>
+      <div class = "cardleft">card counter : <span id="cardleftP1">17</span></div>
 
     </div>
     <div class = "player2">player2
       <div class = "playarea">play area</div>
       <div class = "handcards" id = "hand2">hand</div>
-      <div class = "cardleft">card counter : <span>17</span></div>
+      <div class = "cardleft">card counter : <span id="cardleftP2">17</span></div>
     </div>
 
     <div class = "player3">player3
       <div class = "playarea">play area</div>
       <div class = "handcards" id = "hand3">hand</div>
-      <div class = "cardleft">card counter : <span>17</span></div>
+      <div class = "cardleft">card counter : <span id="cardleftP3">17</span></div>
       <div class = "card" id = "aceSpade"></div> 
       <div class = "card" id = "twoSpade"></div>
     </div>
@@ -34,7 +34,10 @@
 
 
     </div>
-    <div class = "bidphase"> bidding</div>
+
+    <div class = "bidphase"></div>
+    <div>Landlord: <span id="landlordplayer">player1</span></div>
+    <div>Bidpoints: <span id="bidpoints">3</span></div><div>Multiplier: <span id="multiplier">1</span></div>
 
 
     <script type="module" src="/main.js"></script>

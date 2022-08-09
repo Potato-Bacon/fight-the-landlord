@@ -79,7 +79,6 @@ const shuffle = () => {
 };
 
 shuffle();
-console.log(deck);
 
 // deal cards to players
 
@@ -106,7 +105,7 @@ console.log(players[2]);
 
 console.log(landlordCards);
 
-//displaying cards for players
+//displaying cards for players hand
 const dealtCards = () => {
   const playerOne = players[0].hand;
   const playerTwo = players[1].hand;
@@ -114,18 +113,15 @@ const dealtCards = () => {
 
   for (const card of playerOne) {
     let $card = $("<div>")
-      .addClass("card")
+      .addClass("P1front")
       .attr("id", card.Suit + card.Value);
-    console.log($card, "hi");
-    let $handCard = $("#hand1").append($card);
-    $("<button>").append($handCard);
-
-    console.log("button has been selected");
+    $("#hand1").append($card);
   }
 
   for (const card of playerTwo) {
     let $card = $("<div>")
       .addClass("card")
+      .addClass("P2front")
       .attr("id", card.Suit + card.Value);
     $("#hand2").append($card);
   }
@@ -133,6 +129,7 @@ const dealtCards = () => {
   for (const card of playerThree) {
     let $card = $("<div>")
       .addClass("card")
+      .addClass("P3front")
       .attr("id", card.Suit + card.Value);
 
     $("#hand3").append($card);
@@ -140,20 +137,49 @@ const dealtCards = () => {
 
   for (const card of landlordCards) {
     let $card = $("<div>").addClass("card").addClass("back");
-    console.log($card, "hi");
     $(".landlord").append($card);
   }
 };
-dealtCards();
 
+//creation of biddingphase buttons
 const biddingPhase = () => {
-  const $bidOne = $("<button>").text(1);
-  const $bidTwo = $("<button>").text(2);
-  const $bidThree = $("<button>").text(3);
+  const $bidOne = $("<button>").text(1).addClass("bidding");
+  const $bidTwo = $("<button>").text(2).addClass("bidding");
+  const $bidThree = $("<button>").text(3).addClass("bidding");
+  const $pass = $("<button>").text("pass").addClass("bidding");
 
   $(".bidphase").append($bidOne);
   $(".bidphase").append($bidTwo);
   $(".bidphase").append($bidThree);
+  $(".bidphase").append($pass);
+  $(".player1").prepend($(".bidphase"));
+
+  $bidOne.on("click", () => {
+    $bidOne.hide();
+    $(".player2").prepend($(".bidphase"));
+  });
+
+  $bidTwo.on("click", () => {
+    $bidOne.hide();
+    $bidTwo.hide();
+    $(".player2").prepend($(".bidphase"));
+  });
+
+  $bidThree.on("click", () => {
+    $(".bidding").hide();
+  });
+
+  $pass.on("click", () => {
+    $(".player2").prepend($(".bidphase"));
+  });
 };
 
+dealtCards();
 biddingPhase();
+
+// $(() => {
+//   const $card = $(".card").on("click", (event) => {
+//     console.log($(event.currentTarget));
+//     $(event.currentTarget).toggleClass("card-back");
+//   });
+// });
