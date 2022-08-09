@@ -120,6 +120,7 @@ const dealtCards = () => {
   for (const card of playerOne) {
     let $card = $("<div>")
       .addClass("P1front")
+      .addClass("P1")
       .attr("id", card.Suit + card.Value);
     $("#hand1").append($card);
   }
@@ -127,6 +128,7 @@ const dealtCards = () => {
   for (const card of playerTwo) {
     let $card = $("<div>")
       .addClass("P2back")
+      .addClass("P2")
       .attr("id", card.Suit + card.Value);
     $("#hand2").append($card);
   }
@@ -134,6 +136,7 @@ const dealtCards = () => {
   for (const card of playerThree) {
     let $card = $("<div>")
       .addClass("P3back")
+      .addClass("P3")
       .attr("id", card.Suit + card.Value);
 
     $("#hand3").append($card);
@@ -208,6 +211,9 @@ $(".P1front").on("click", (event) => {
   $(event.currentTarget).toggleClass("shiftup");
 });
 
-$(".shiftup");
+$("#play").on("click", () => {
+  $(".playarea").append($(".shiftup"));
+  $(".P1").removeClass("P1front").addClass("P1back");
+});
 
 biddingPhase();

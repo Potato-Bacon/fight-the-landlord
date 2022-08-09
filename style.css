@@ -7,7 +7,10 @@
 .playarea{
     position: absolute;
     top: 500px;
-    left: 650px;
+    left: 550px;
+    display: flex;
+    flex-direction: row;
+    text-align:center;
 }
 
 
@@ -45,6 +48,7 @@ top: 150px
     background-size : cover;
     width: 100px;
     height: 100px;
+    margin-right: -50px;
 
 }
 
