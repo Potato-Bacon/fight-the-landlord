@@ -1,7 +1,20 @@
+.message{
+    position: absolute;
+    top: 400px;
+    left: 600px;
+}
+
+.playarea{
+    position: absolute;
+    top: 500px;
+    left: 650px;
+}
+
+
 .player1 {
     position: absolute;
     top: 800px;
-    left: 300px
+    left: 150px
 }
 .player2 {
     position:absolute;
@@ -11,7 +24,7 @@
 }
 .player3 {
 position: absolute;
-left: 1200px;
+left: 1300px;
 top: 150px
 }
 
@@ -22,17 +35,54 @@ top: 150px
 }
 
 
-#hand1 {
+#hand1, .landlord{
     display: flex;
     flex-direction: row;
 }
 
+.P1back {
+    background-image: url(https://freesvg.org/img/nicubunu_Card_backs_grid_blue.png) !important;
+    background-size : cover;
+    width: 100px;
+    height: 100px;
+
+}
+
+.landlordback {
+    background-image: url(https://freesvg.org/img/nicubunu_Card_backs_grid_blue.png) !important;
+    background-size : cover;
+    width: 100px;
+    height: 100px;
+}
+
+
+.P2back {
+    background-image: url(https://freesvg.org/img/nicubunu_Card_backs_grid_blue.png) !important ;
+    background-size : cover;
+    width: 100px;
+    height: 100px;
+    margin-top: -50px;
+    transform: rotate(0.25turn);
+}
+
+.P3back {
+    background-image: url(https://freesvg.org/img/nicubunu_Card_backs_grid_blue.png) !important ;
+    background-size : cover;
+    width: 100px;
+    height: 100px;
+    margin-top: -50px;
+    transform: rotate(0.75turn);
+}
+
+/* .back, .P1back, .P2back, .P3back {
+    background-image: url(https://freesvg.org/img/nicubunu_Card_backs_grid_blue.png) !important
+} */
 
 .P1front {
     background-size : cover;
     width: 100px;
     height: 100px;
-    margin-right: -60px;
+    margin-right: -50px;
 }
 
 .P2front {
@@ -53,14 +103,18 @@ top: 150px
 
 }
 
+.shiftup {
+    position: relative;
+    bottom: 20px;
+}
 
 
-#SpadesA {
+#Spades14 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Ace_of_spades.png);
 }
 
 
-#Spades2{
+#Spades15{
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_2_of_spades.png);
 }
 
@@ -101,24 +155,24 @@ top: 150px
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_10_of_spades.png);
 }
 
-#SpadesJ {
+#Spades11 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Jack_of_spades.png);
 }
 
-#SpadesQ {
+#Spades12 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Queen_of_spades.png);
 }
 
-#SpadesK {
+#Spades13 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_King_of_spades.png);
 }
 
 /* ------------------------------------ */
-#HeartA {
+#Heart14 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Ace_of_hearts.png);
 }
 
-#Heart2 {
+#Heart15 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_2_of_hearts.png);
 }
 
@@ -156,25 +210,25 @@ top: 150px
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_10_of_hearts.png)
 }
 
-#HeartJ {
+#Heart11 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Jack_of_hearts.png)
 }
 
-#HeartQ {
+#Heart12 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Queen_of_hearts.png)
 }
 
-#HeartK {
+#Heart13 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_King_of_hearts.png)
 }
 
 /* ------------------------------------ */
 
-#DiamondsA {
+#Diamonds14 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Ace_of_diamonds.png);
 }
 
-#Diamonds2{
+#Diamonds15{
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_2_of_diamonds.png);
 }
 
@@ -212,25 +266,25 @@ top: 150px
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_10_of_diamonds.png)
 }
 
-#DiamondsJ {
+#Diamonds11 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Jack_of_diamonds.png) 
 }
 
-#DiamondsQ {
+#Diamonds12 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Queen_of_diamonds.png)
 }
 
-#DiamondsK{
+#Diamonds13{
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_King_of_diamonds.png)
 }
 
 /* ------------------------------------ */
 
-#ClubA{
+#Club14{
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Ace_of_clubs.png);
 }
 
-#Club2 {
+#Club15 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_2_of_clubs.png);
 }
 
@@ -268,26 +322,22 @@ top: 150px
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_10_of_clubs.png)
 }
 
-#ClubJ {
+#Club11 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Jack_of_clubs.png)
 }
 
-#ClubQ {
+#Club12 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Queen_of_clubs.png)
 }
 
-#ClubK{
+#Club13{
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_King_of_clubs.png)
 }
 
-#BlackJoker {
+#Black16 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Black_Joker.png)
 }
 
-#RedJoker {
+#Red16 {
     background-image: url(https://freesvg.org/img/nicubunu_White_deck_Red_Joker.png)
-}
-
-.back, .P1back, .P2back, .P3back {
-    background-image: url(https://freesvg.org/img/nicubunu_Card_backs_grid_blue.png) !important
 }

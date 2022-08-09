@@ -2,8 +2,8 @@ import $ from "jquery";
 
 // declare card elements
 let deck = [
-  { Value: "A", Suit: "Spades" },
-  { Value: "2", Suit: "Spades" },
+  { Value: "14", Suit: "Spades" },
+  { Value: "15", Suit: "Spades" },
   { Value: "3", Suit: "Spades" },
   { Value: "4", Suit: "Spades" },
   { Value: "5", Suit: "Spades" },
@@ -12,11 +12,11 @@ let deck = [
   { Value: "8", Suit: "Spades" },
   { Value: "9", Suit: "Spades" },
   { Value: "10", Suit: "Spades" },
-  { Value: "J", Suit: "Spades" },
-  { Value: "Q", Suit: "Spades" },
-  { Value: "K", Suit: "Spades" },
-  { Value: "A", Suit: "Diamonds" },
-  { Value: "2", Suit: "Diamonds" },
+  { Value: "11", Suit: "Spades" },
+  { Value: "12", Suit: "Spades" },
+  { Value: "13", Suit: "Spades" },
+  { Value: "14", Suit: "Diamonds" },
+  { Value: "15", Suit: "Diamonds" },
   { Value: "3", Suit: "Diamonds" },
   { Value: "4", Suit: "Diamonds" },
   { Value: "5", Suit: "Diamonds" },
@@ -25,11 +25,11 @@ let deck = [
   { Value: "8", Suit: "Diamonds" },
   { Value: "9", Suit: "Diamonds" },
   { Value: "10", Suit: "Diamonds" },
-  { Value: "J", Suit: "Diamonds" },
-  { Value: "Q", Suit: "Diamonds" },
-  { Value: "K", Suit: "Diamonds" },
-  { Value: "A", Suit: "Club" },
-  { Value: "2", Suit: "Club" },
+  { Value: "11", Suit: "Diamonds" },
+  { Value: "12", Suit: "Diamonds" },
+  { Value: "13", Suit: "Diamonds" },
+  { Value: "14", Suit: "Club" },
+  { Value: "15", Suit: "Club" },
   { Value: "3", Suit: "Club" },
   { Value: "4", Suit: "Club" },
   { Value: "5", Suit: "Club" },
@@ -38,11 +38,11 @@ let deck = [
   { Value: "8", Suit: "Club" },
   { Value: "9", Suit: "Club" },
   { Value: "10", Suit: "Club" },
-  { Value: "J", Suit: "Club" },
-  { Value: "Q", Suit: "Club" },
-  { Value: "K", Suit: "Club" },
-  { Value: "A", Suit: "Heart" },
-  { Value: "2", Suit: "Heart" },
+  { Value: "11", Suit: "Club" },
+  { Value: "12", Suit: "Club" },
+  { Value: "13", Suit: "Club" },
+  { Value: "14", Suit: "Heart" },
+  { Value: "15", Suit: "Heart" },
   { Value: "3", Suit: "Heart" },
   { Value: "4", Suit: "Heart" },
   { Value: "5", Suit: "Heart" },
@@ -51,22 +51,29 @@ let deck = [
   { Value: "8", Suit: "Heart" },
   { Value: "9", Suit: "Heart" },
   { Value: "10", Suit: "Heart" },
-  { Value: "J", Suit: "Heart" },
-  { Value: "Q", Suit: "Heart" },
-  { Value: "K", Suit: "Heart" },
-  { Value: "Joker", Suit: "Black" },
-  { Value: "Joker", Suit: "Red" },
+  { Value: "11", Suit: "Heart" },
+  { Value: "12", Suit: "Heart" },
+  { Value: "13", Suit: "Heart" },
+  { Value: "16", Suit: "Black" },
+  { Value: "16", Suit: "Red" },
 ];
 
 // number of players
-let players = [
-  { name: "P1", hand: [] },
-  { name: "P2", hand: [] },
-  { name: "P3", hand: [] },
-];
 
 //placeholder for bonus card which will be given to landlord player after bidding phase
-let landlordCards = [];
+
+const game = {
+  turn: "P1",
+  landlordplayer: "P1",
+  bidpoints: "3",
+  multiplier: "1",
+  players: [
+    { name: "P1", hand: [] },
+    { name: "P2", hand: [] },
+    { name: "P3", hand: [] },
+  ],
+  landlordcards: [],
+};
 
 //shuffle of cards
 const shuffle = () => {
@@ -84,33 +91,32 @@ shuffle();
 
 const deal = () => {
   let bonusCards = deck.pop();
-  landlordCards.push(bonusCards);
+  game.landlordcards.push(bonusCards);
   bonusCards = deck.pop();
-  landlordCards.push(bonusCards);
+  game.landlordcards.push(bonusCards);
   bonusCards = deck.pop();
-  landlordCards.push(bonusCards);
+  game.landlordcards.push(bonusCards);
 
   for (let cards = 0; cards - 14 < deck.length; cards++) {
-    for (let dealt = 0; dealt < players.length; dealt++) {
-      players[dealt].hand.push(deck[0]);
+    for (let dealt = 0; dealt < game.players.length; dealt++) {
+      game.players[dealt].hand.push(deck[0]);
       deck.shift();
     }
   }
 };
 
 deal();
-console.log(players[0]);
-console.log(players[1]);
-console.log(players[2]);
+console.log(game.players[0]);
+console.log(game.players[1]);
+console.log(game.players[2]);
 
-console.log(landlordCards);
+console.log(game.landlordcards);
 
 //displaying cards for players hand
+const playerOne = game.players[0].hand;
+const playerTwo = game.players[1].hand;
+const playerThree = game.players[2].hand;
 const dealtCards = () => {
-  const playerOne = players[0].hand;
-  const playerTwo = players[1].hand;
-  const playerThree = players[2].hand;
-
   for (const card of playerOne) {
     let $card = $("<div>")
       .addClass("P1front")
@@ -120,66 +126,88 @@ const dealtCards = () => {
 
   for (const card of playerTwo) {
     let $card = $("<div>")
-      .addClass("card")
-      .addClass("P2front")
+      .addClass("P2back")
       .attr("id", card.Suit + card.Value);
     $("#hand2").append($card);
   }
 
   for (const card of playerThree) {
     let $card = $("<div>")
-      .addClass("card")
-      .addClass("P3front")
+      .addClass("P3back")
       .attr("id", card.Suit + card.Value);
 
     $("#hand3").append($card);
   }
 
-  for (const card of landlordCards) {
-    let $card = $("<div>").addClass("card").addClass("back");
+  for (const card of game.landlordcards) {
+    let $card = $("<div>")
+      .addClass("landlordback")
+      .attr("id", card.Suit + card.Value);
     $(".landlord").append($card);
   }
 };
 
-//creation of biddingphase buttons
-const biddingPhase = () => {
-  const $bidOne = $("<button>").text(1).addClass("bidding");
-  const $bidTwo = $("<button>").text(2).addClass("bidding");
-  const $bidThree = $("<button>").text(3).addClass("bidding");
-  const $pass = $("<button>").text("pass").addClass("bidding");
+dealtCards();
 
-  $(".bidphase").append($bidOne);
-  $(".bidphase").append($bidTwo);
-  $(".bidphase").append($bidThree);
-  $(".bidphase").append($pass);
-  $(".player1").prepend($(".bidphase"));
+const $bidOne = $("<button>").text(1).addClass("biddingphase");
+const $bidTwo = $("<button>").text(2).addClass("biddingphase");
+const $bidThree = $("<button>").text(3).addClass("biddingphase");
+const $pass = $("<button>").text("pass").addClass("biddingphase");
+
+// const changeTurn = () => {
+//   $(".biddingphase").on("click", () => {
+//     if (game.turn === "P1") {
+//       game.turn = "P2";
+//     }
+//     if (game.turn === "P2") {
+//       game.turn = "P3";
+//     } else {
+//       game.turn = "P1";
+//     }
+//     console.log(game.turn);
+//   });
+// };
+const biddingPhase = () => {
+  $(".message").append($bidOne);
+  $(".message").append($bidTwo);
+  $(".message").append($bidThree);
+  $(".message").append($pass);
+
+  let count = 1;
 
   $bidOne.on("click", () => {
     $bidOne.hide();
-    $(".player2").prepend($(".bidphase"));
+    count++;
+    $("#turn").text(count);
+    // changeTurn();
   });
 
   $bidTwo.on("click", () => {
     $bidOne.hide();
     $bidTwo.hide();
-    $(".player2").prepend($(".bidphase"));
+    count++;
+    $("#turn").text(count);
+    // changeTurn();
   });
 
   $bidThree.on("click", () => {
-    $(".bidding").hide();
+    $(".landlordback").removeClass("landlordback").addClass("P1front");
+    $("#hand1").append($(".P1front"));
+
+    // changeTurn();
   });
 
   $pass.on("click", () => {
-    $(".player2").prepend($(".bidphase"));
+    count++;
+    $("#turn").text(count);
+    // changeTurn();
   });
 };
 
-dealtCards();
-biddingPhase();
+$(".P1front").on("click", (event) => {
+  $(event.currentTarget).toggleClass("shiftup");
+});
 
-// $(() => {
-//   const $card = $(".card").on("click", (event) => {
-//     console.log($(event.currentTarget));
-//     $(event.currentTarget).toggleClass("card-back");
-//   });
-// });
+$(".shiftup");
+
+biddingPhase();
