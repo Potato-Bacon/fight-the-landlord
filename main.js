@@ -63,16 +63,18 @@ let deck = [
 //placeholder for bonus card which will be given to landlord player after bidding phase
 
 const game = {
-  turn: "P1",
-  landlordplayer: "P1",
-  bidpoints: "3",
-  multiplier: "1",
   players: [
     { name: "P1", hand: [] },
     { name: "P2", hand: [] },
     { name: "P3", hand: [] },
   ],
   landlordcards: [],
+  turn: "P1",
+  currentbidder: "P1",
+  currentwinningbid: "1",
+  landlordplayer: "P1", //bidwinner
+  bidpoints: "3",
+  multiplier: "1",
 };
 
 //shuffle of cards
@@ -106,6 +108,7 @@ const deal = () => {
 };
 
 deal();
+
 console.log(game.players[0]);
 console.log(game.players[1]);
 console.log(game.players[2]);
@@ -113,11 +116,9 @@ console.log(game.players[2]);
 console.log(game.landlordcards);
 
 //displaying cards for players hand
-const playerOne = game.players[0].hand;
-const playerTwo = game.players[1].hand;
-const playerThree = game.players[2].hand;
+
 const dealtCards = () => {
-  for (const card of playerOne) {
+  for (const card of game.players[0].hand) {
     let $card = $("<div>")
       .addClass("P1front")
       .addClass("P1")
@@ -125,7 +126,7 @@ const dealtCards = () => {
     $("#hand1").append($card);
   }
 
-  for (const card of playerTwo) {
+  for (const card of game.players[1].hand) {
     let $card = $("<div>")
       .addClass("P2back")
       .addClass("P2")
@@ -133,7 +134,7 @@ const dealtCards = () => {
     $("#hand2").append($card);
   }
 
-  for (const card of playerThree) {
+  for (const card of game.players[2].hand) {
     let $card = $("<div>")
       .addClass("P3back")
       .addClass("P3")
@@ -157,19 +158,6 @@ const $bidTwo = $("<button>").text(2).addClass("biddingphase");
 const $bidThree = $("<button>").text(3).addClass("biddingphase");
 const $pass = $("<button>").text("pass").addClass("biddingphase");
 
-// const changeTurn = () => {
-//   $(".biddingphase").on("click", () => {
-//     if (game.turn === "P1") {
-//       game.turn = "P2";
-//     }
-//     if (game.turn === "P2") {
-//       game.turn = "P3";
-//     } else {
-//       game.turn = "P1";
-//     }
-//     console.log(game.turn);
-//   });
-// };
 const biddingPhase = () => {
   $(".message").append($bidOne);
   $(".message").append($bidTwo);
@@ -179,10 +167,10 @@ const biddingPhase = () => {
   let count = 1;
 
   $bidOne.on("click", () => {
+    changeBidder();
     $bidOne.hide();
     count++;
     $("#turn").text(count);
-    // changeTurn();
   });
 
   $bidTwo.on("click", () => {
@@ -190,30 +178,50 @@ const biddingPhase = () => {
     $bidTwo.hide();
     count++;
     $("#turn").text(count);
-    // changeTurn();
+    changeBidder();
   });
 
   $bidThree.on("click", () => {
     $(".landlordback").removeClass("landlordback").addClass("P1front");
     $("#hand1").append($(".P1front"));
-
-    // changeTurn();
   });
 
   $pass.on("click", () => {
+    changeBidder();
     count++;
     $("#turn").text(count);
-    // changeTurn();
   });
+};
+const changeBidder = () => {
+  if (game.currentbidder === "P1") {
+    game.currentbidder = "P2";
+    console.log(game.currentbidder, "current bidder");
+  } else if (game.currentbidder === "P2") {
+    game.currentbidder = "P3";
+    console.log(game.currentbidder, "current bidder");
+  }
 };
 
 $(".P1front").on("click", (event) => {
   $(event.currentTarget).toggleClass("shiftup");
-});
-
-$("#play").on("click", () => {
-  $(".playarea").append($(".shiftup"));
-  $(".P1").removeClass("P1front").addClass("P1back");
+  console.log($(".shiftup"));
 });
 
 biddingPhase();
+
+//check for pairs
+
+for (const card of game.players[0].hand) {
+  if (card.Value / card.Value === 1 && $(".shiftup").length === 2) {
+    $("#play").on("click", () => {
+      $(".playarea").append($(".shiftup"));
+      $(".P1").removeClass("P1front").addClass("P1back");
+    });
+  }
+}
+
+//play button does nothing if condition is false
+
+//check for straight
+
+//check for fullhouse
