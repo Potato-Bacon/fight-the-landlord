@@ -72,7 +72,7 @@ const game = {
   turn: 0,
   currentbidder: 0,
   currentwinningbid: 0,
-  landlordplayer: 0, //bidwinner
+  landlordplayer: 0,
   bidpoints: 0,
   multiplier: 0,
 };
@@ -87,6 +87,7 @@ const shuffle = () => {
   }
 };
 
+//push card from deck to landlord(bonus cards for landlordplayer for winning bidder)
 const deckToLandlord = () => {
   let $dealtCard = deck.shift();
   game.landlordcards.push($dealtCard);
@@ -98,6 +99,7 @@ const deckToLandlord = () => {
   $(".landlord").append($card);
 };
 
+//function for deal all cards
 const deckToHand = (index) => {
   let $dealtCard = deck.shift();
   game.players[index].hand.push($dealtCard);
@@ -124,12 +126,12 @@ const deckToHand = (index) => {
     let cardPlayerID = Number($card.attr("player"));
     if (game.turn === cardPlayerID) {
       $(event.currentTarget).toggleClass("shiftup");
+    }
 
-      if ($(event.currentTarget).hasClass("shiftup") === true) {
-        comboCheck.push($(".shiftup").attr("value"));
-      } else {
-        comboCheck.pop();
-      }
+    if ($(event.currentTarget).hasClass("shiftup") === true) {
+      comboCheck.push($(".shiftup").attr("value"));
+    } else {
+      comboCheck.pop();
     }
 
     console.log($(".shiftup").length, "length");
@@ -139,8 +141,6 @@ const deckToHand = (index) => {
   });
 };
 shuffle();
-
-const displayCards = () => {};
 
 // deal cards to players
 
@@ -159,18 +159,11 @@ const deal = () => {
 };
 deal();
 
-console.log(game.players[0]);
-console.log(game.players[1]);
-console.log(game.players[2]);
-
-console.log(game.landlordcards);
-
-const $bidOne = $("<button>").text(1).addClass("biddingphase");
-const $bidTwo = $("<button>").text(2).addClass("biddingphase");
-const $bidThree = $("<button>").text(3).addClass("biddingphase");
-const $pass = $("<button>").text("pass").addClass("biddingphase");
-
 const biddingPhase = () => {
+  const $bidOne = $("<button>").text(1).addClass("biddingphase");
+  const $bidTwo = $("<button>").text(2).addClass("biddingphase");
+  const $bidThree = $("<button>").text(3).addClass("biddingphase");
+  const $pass = $("<button>").text("pass").addClass("biddingphase");
   $(".message").append($bidOne);
   $(".message").append($bidTwo);
   $(".message").append($bidThree);
@@ -202,11 +195,9 @@ const biddingPhase = () => {
       } else {
         comboCheck.pop();
       }
+      console.log(comboCheck, "sorted");
     });
-    $(".landlordback")
-      .removeClass("landlordback")
-      .addClass("P1front")
-      .addClass("P1");
+    $(".landlordback").removeClass("landlordback").addClass("P1front");
     $("#hand1").append($(".P1front"));
 
     game.players[0].hand.push(game.landlordcards.shift());
@@ -238,7 +229,7 @@ $("#play").on("click", () => {
   if ($(".shiftup").length === 2 && allNumbersEqual() === true) {
     // $(".shiftup").eq(0).attr("value") / $(".shiftup").eq(1).attr("value") === 1
     $(".playarea").append($(".shiftup"));
-    $(".P1").removeClass("P1front").addClass("P1back");
+    // $(".P1").removeClass("P1front").addClass("P1back");
   }
 });
 
@@ -253,6 +244,8 @@ const allNumbersEqual = () => {
     }
   });
 };
+
+allNumbersEqual();
 
 //check for straights
 // const checkStraights = () =>
@@ -276,7 +269,12 @@ $("#play").on("click", () => {
     $(".shiftup").eq(1).attr("value") === $(".shiftup").eq(2).attr("value")
   ) {
     $(".playarea").append($(".shiftup"));
-    $(".P1").removeClass("P1front").addClass("P1back");
+    $(".P1front").removeClass("shiftup");
+    comboCheck = [];
+    const playerOneHandCards = $("div#hand1>div.P1front");
+    playerOneHandCards.addClass("P1back");
+
+    // $(".P1").removeClass("P1front").addClass("P1back");
   }
 });
 
@@ -288,7 +286,7 @@ $("#play").on("click", () => {
     $(".shiftup").eq(1).attr("value") === $(".shiftup").eq(2).attr("value")
   ) {
     $(".playarea").append($(".shiftup"));
-    $(".P1").removeClass("P1front").addClass("P1back");
+    // $(".P1").removeClass("P1front").addClass("P1back");
   }
 });
 
