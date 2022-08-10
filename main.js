@@ -122,7 +122,8 @@ const dealtCards = () => {
     let $card = $("<div>")
       .addClass("P1front")
       .addClass("P1")
-      .attr("id", card.Suit + card.Value);
+      .attr("id", card.Suit + card.Value)
+      .attr("value", card.Value);
     $("#hand1").append($card);
   }
 
@@ -130,7 +131,8 @@ const dealtCards = () => {
     let $card = $("<div>")
       .addClass("P2back")
       .addClass("P2")
-      .attr("id", card.Suit + card.Value);
+      .attr("id", card.Suit + card.Value)
+      .attr("value", card.Value);
     $("#hand2").append($card);
   }
 
@@ -138,7 +140,8 @@ const dealtCards = () => {
     let $card = $("<div>")
       .addClass("P3back")
       .addClass("P3")
-      .attr("id", card.Suit + card.Value);
+      .attr("id", card.Suit + card.Value)
+      .attr("value", card.Value);
 
     $("#hand3").append($card);
   }
@@ -201,24 +204,40 @@ const changeBidder = () => {
     console.log(game.currentbidder, "current bidder");
   }
 };
+let comboCheck = [];
 
 $(".P1front").on("click", (event) => {
   $(event.currentTarget).toggleClass("shiftup");
-  console.log($(".shiftup"));
+
+  if ($(event.currentTarget).hasClass("shiftup") === true) {
+    comboCheck.push($(".shiftup").attr("value"));
+  } else {
+    comboCheck.pop();
+  }
+
+  console.log($(".shiftup").length, "length");
+  console.log(comboCheck, "comboCheck array");
+  comboCheck.sort();
+  console.log(comboCheck, "sorted");
 });
 
 biddingPhase();
 
 //check for pairs
-
-for (const card of game.players[0].hand) {
-  if (card.Value / card.Value === 1 && $(".shiftup").length === 2) {
-    $("#play").on("click", () => {
-      $(".playarea").append($(".shiftup"));
-      $(".P1").removeClass("P1front").addClass("P1back");
-    });
+$("#play").on("click", () => {
+  if (
+    $(".shiftup").length === 2 &&
+    $(".shiftup").eq(0).attr("value") / $(".shiftup").eq(1).attr("value") === 1
+  ) {
+    $(".playarea").append($(".shiftup"));
+    $(".P1").removeClass("P1front").addClass("P1back");
   }
-}
+});
+
+//check for straights
+$("#play").on("click", () => {
+  console.log(comboCheck, "straights array");
+});
 
 //play button does nothing if condition is false
 
