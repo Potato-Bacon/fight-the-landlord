@@ -27,7 +27,7 @@
 }
 .player3 {
 position: absolute;
-left: 1300px;
+left: 1500px;
 top: 150px
 }
 
@@ -65,7 +65,7 @@ top: 150px
     background-size : cover;
     width: 100px;
     height: 100px;
-    margin-top: -50px;
+    margin-top: -40px;
     transform: rotate(0.25turn);
 }
 
@@ -74,7 +74,7 @@ top: 150px
     background-size : cover;
     width: 100px;
     height: 100px;
-    margin-top: -50px;
+    margin-top: -40px;
     transform: rotate(0.75turn);
 }
 
@@ -86,14 +86,14 @@ top: 150px
     background-size : cover;
     width: 100px;
     height: 100px;
-    margin-right: -50px;
+    margin-right: -40px;
 }
 
 .P2front {
     background-size : cover;
     width: 100px;
     height: 100px;
-    margin-top: -50px;
+    margin-top: -40px;
     transform: rotate(0.25turn);
 
 }
@@ -102,7 +102,7 @@ top: 150px
     background-size : cover;
     width: 100px;
     height: 100px;
-    margin-top: -50px;
+    margin-top: -40px;
     transform: rotate(0.75turn);
 
 }

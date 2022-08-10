@@ -69,12 +69,12 @@ const game = {
     { name: "P3", hand: [] },
   ],
   landlordcards: [],
-  turn: "P1",
-  currentbidder: "P1",
-  currentwinningbid: "1",
-  landlordplayer: "P1", //bidwinner
-  bidpoints: "3",
-  multiplier: "1",
+  turn: 0,
+  currentbidder: 0,
+  currentwinningbid: 0,
+  landlordplayer: 0, //bidwinner
+  bidpoints: 0,
+  multiplier: 0,
 };
 
 //shuffle of cards
@@ -87,26 +87,76 @@ const shuffle = () => {
   }
 };
 
+const deckToLandlord = () => {
+  let $dealtCard = deck.shift();
+  game.landlordcards.push($dealtCard);
+
+  let $card = $("<div>")
+    .addClass("landlordback")
+    .attr("id", $dealtCard.Suit + $dealtCard.Value)
+    .attr("value", $dealtCard.Value);
+  $(".landlord").append($card);
+};
+
+const deckToHand = (index) => {
+  let $dealtCard = deck.shift();
+  game.players[index].hand.push($dealtCard);
+  let $player = index + 1;
+  let $card = null;
+  if (game.turn === index) {
+    $card = $("<div>")
+      .addClass("P" + $player + "front")
+
+      .attr("id", $dealtCard.Suit + $dealtCard.Value)
+      .attr("value", $dealtCard.Value);
+    $("#hand" + $player).append($card);
+  } else {
+    $card = $("<div>")
+      .addClass("P" + $player + "back")
+      .attr("id", $dealtCard.Suit + $dealtCard.Value)
+      .attr("value", $dealtCard.Value);
+    $("#hand" + $player).append($card);
+  }
+
+  $card.attr("player", index);
+
+  $card.on("click", (event) => {
+    let cardPlayerID = Number($card.attr("player"));
+    if (game.turn === cardPlayerID) {
+      $(event.currentTarget).toggleClass("shiftup");
+
+      if ($(event.currentTarget).hasClass("shiftup") === true) {
+        comboCheck.push($(".shiftup").attr("value"));
+      } else {
+        comboCheck.pop();
+      }
+    }
+
+    console.log($(".shiftup").length, "length");
+    console.log(comboCheck, "comboCheck array");
+    comboCheck.sort((a, b) => a - b);
+    console.log(comboCheck, "sorted");
+  });
+};
 shuffle();
+
+const displayCards = () => {};
 
 // deal cards to players
 
 const deal = () => {
-  let bonusCards = deck.pop();
-  game.landlordcards.push(bonusCards);
-  bonusCards = deck.pop();
-  game.landlordcards.push(bonusCards);
-  bonusCards = deck.pop();
-  game.landlordcards.push(bonusCards);
+  deckToLandlord();
+  deckToLandlord();
+  deckToLandlord();
 
-  for (let cards = 0; cards - 14 < deck.length; cards++) {
-    for (let dealt = 0; dealt < game.players.length; dealt++) {
-      game.players[dealt].hand.push(deck[0]);
-      deck.shift();
+  while (deck.length !== 0) {
+    for (let playerid = 0; playerid < game.players.length; playerid++) {
+      if (deck.length !== 0) {
+        deckToHand(playerid);
+      }
     }
   }
 };
-
 deal();
 
 console.log(game.players[0]);
@@ -114,47 +164,6 @@ console.log(game.players[1]);
 console.log(game.players[2]);
 
 console.log(game.landlordcards);
-
-//displaying cards for players hand
-
-const dealtCards = () => {
-  for (const card of game.players[0].hand) {
-    let $card = $("<div>")
-      .addClass("P1front")
-      .addClass("P1")
-      .attr("id", card.Suit + card.Value)
-      .attr("value", card.Value);
-    $("#hand1").append($card);
-  }
-
-  for (const card of game.players[1].hand) {
-    let $card = $("<div>")
-      .addClass("P2back")
-      .addClass("P2")
-      .attr("id", card.Suit + card.Value)
-      .attr("value", card.Value);
-    $("#hand2").append($card);
-  }
-
-  for (const card of game.players[2].hand) {
-    let $card = $("<div>")
-      .addClass("P3back")
-      .addClass("P3")
-      .attr("id", card.Suit + card.Value)
-      .attr("value", card.Value);
-
-    $("#hand3").append($card);
-  }
-
-  for (const card of game.landlordcards) {
-    let $card = $("<div>")
-      .addClass("landlordback")
-      .attr("id", card.Suit + card.Value);
-    $(".landlord").append($card);
-  }
-};
-
-dealtCards();
 
 const $bidOne = $("<button>").text(1).addClass("biddingphase");
 const $bidTwo = $("<button>").text(2).addClass("biddingphase");
@@ -170,7 +179,7 @@ const biddingPhase = () => {
   let count = 1;
 
   $bidOne.on("click", () => {
-    changeBidder();
+    if (game.turn === 0) changeBidder();
     $bidOne.hide();
     count++;
     $("#turn").text(count);
@@ -185,8 +194,24 @@ const biddingPhase = () => {
   });
 
   $bidThree.on("click", () => {
-    $(".landlordback").removeClass("landlordback").addClass("P1front");
+    $(".landlordback").on("click", (event) => {
+      $(event.currentTarget).toggleClass("shiftup");
+
+      if ($(event.currentTarget).hasClass("shiftup") === true) {
+        comboCheck.push($(".shiftup").attr("value"));
+      } else {
+        comboCheck.pop();
+      }
+    });
+    $(".landlordback")
+      .removeClass("landlordback")
+      .addClass("P1front")
+      .addClass("P1");
     $("#hand1").append($(".P1front"));
+
+    game.players[0].hand.push(game.landlordcards.shift());
+    game.players[0].hand.push(game.landlordcards.shift());
+    game.players[0].hand.push(game.landlordcards.shift());
   });
 
   $pass.on("click", () => {
@@ -206,41 +231,65 @@ const changeBidder = () => {
 };
 let comboCheck = [];
 
-$(".P1front").on("click", (event) => {
-  $(event.currentTarget).toggleClass("shiftup");
-
-  if ($(event.currentTarget).hasClass("shiftup") === true) {
-    comboCheck.push($(".shiftup").attr("value"));
-  } else {
-    comboCheck.pop();
-  }
-
-  console.log($(".shiftup").length, "length");
-  console.log(comboCheck, "comboCheck array");
-  comboCheck.sort();
-  console.log(comboCheck, "sorted");
-});
-
 biddingPhase();
 
 //check for pairs
 $("#play").on("click", () => {
+  if ($(".shiftup").length === 2 && allNumbersEqual() === true) {
+    // $(".shiftup").eq(0).attr("value") / $(".shiftup").eq(1).attr("value") === 1
+    $(".playarea").append($(".shiftup"));
+    $(".P1").removeClass("P1front").addClass("P1back");
+  }
+});
+
+const allNumbersEqual = () => {
+  comboCheck.every((element) => {
+    if (element === comboCheck[0]) {
+      console.log("true");
+      return true;
+    } else {
+      console.log("false");
+      return false;
+    }
+  });
+};
+
+//check for straights
+// const checkStraights = () =>
+$("#play").on("click", () => {
+  for (let index = 0; index < comboCheck.length; index++) {
+    if (
+      comboCheck[index + 1] - comboCheck[index] === 1 &&
+      comboCheck.length >= 5
+    ) {
+      $(".playarea").append($(".shiftup"));
+      $(".P1").removeClass("P1front").addClass("P1back");
+    }
+  }
+});
+
+//check for triplets
+$("#play").on("click", () => {
   if (
-    $(".shiftup").length === 2 &&
-    $(".shiftup").eq(0).attr("value") / $(".shiftup").eq(1).attr("value") === 1
+    $(".shiftup").length === 3 &&
+    $(".shiftup").eq(0).attr("value") === $(".shiftup").eq(1).attr("value") &&
+    $(".shiftup").eq(1).attr("value") === $(".shiftup").eq(2).attr("value")
   ) {
     $(".playarea").append($(".shiftup"));
     $(".P1").removeClass("P1front").addClass("P1back");
   }
 });
 
-//check for straights
+//check for rocket
 $("#play").on("click", () => {
-  console.log(comboCheck, "straights array");
+  if (
+    $(".shiftup").length === 2 &&
+    $(".shiftup").eq(0).attr("value") === $(".shiftup").eq(1).attr("value") &&
+    $(".shiftup").eq(1).attr("value") === $(".shiftup").eq(2).attr("value")
+  ) {
+    $(".playarea").append($(".shiftup"));
+    $(".P1").removeClass("P1front").addClass("P1back");
+  }
 });
 
-//play button does nothing if condition is false
-
-//check for straight
-
-//check for fullhouse
+//check for bomb
