@@ -227,11 +227,48 @@ const allNumbersEqual = (arr) => {
     }
   });
 };
+
 const changeTurn = (index) => {
-  game.turn++;
-  const playerHandCards = $("div#hand1>div.P" + (index + 1) + "front");
-  playerHandCards.addClass("P" + index + 1 + "back");
+  index++;
+  $(".P" + index + "front").removeClass("shiftup");
+  const playerHandCards = $("div#hand" + index + ">div.P" + index + "front");
+  playerHandCards.addClass("P" + index + "back");
+  if (index === 3) {
+    game.turn = 0;
+    index = 1;
+    $(".P" + index + "back")
+      .toggleClass("P" + index + "front")
+      .toggleClass("P" + index + "back");
+  } else {
+    index++;
+    game.turn++;
+    // console.log(index, "hi");
+    $(".P" + index + "back")
+      .toggleClass("P" + index + "front")
+      .toggleClass("P" + index + "back");
+  }
 };
+
+// const changeTurn = (index) => {
+//   index + 1;
+
+//   if (index > 3) {
+//     index = 1;
+//     let nextplayer = (game.turn = 1);
+//     $(".P" + index + "front").removeClass("shiftup");
+//     const playerHandCards = $("div#hand1>div.P" + index + "front");
+//     playerHandCards.addClass("P" + index + "back");
+//     // $(".P2back").toggleClass("P2front").toggleClass("P2back");
+//   } else {
+//     $(".P" + index + "front").removeClass("shiftup");
+//     $(".P1front").removeClass("shiftup");
+//     const playerHandCards = $("div#hand1>div.P" + index + "front");
+//     playerHandCards.addClass("P" + index + "back");
+//   }
+//   game.turn++;
+//   $(".P2back").toggleClass("P2front").toggleClass("P2back");
+// };
+
 let currentHighestCardValue = 0;
 let numCardsInPlay = 1;
 
@@ -245,28 +282,34 @@ $("#play").on("click", () => {
     numCardsInPlay = $(".shiftup").length;
     currentHighestCardValue = comboCheck[0];
     $(".playarea").append($(".shiftup"));
-    $(".P1front").removeClass("shiftup");
+    changeTurn(game.turn);
+    // $(".P1front").removeClass("shiftup");
     comboCheck = [];
-    const playerOneHandCards = $("div#hand1>div.P1front");
-    playerOneHandCards.addClass("P1back");
-    game.turn++;
-    $(".P2back").toggleClass("P2front").toggleClass("P2back");
+    // const playerOneHandCards = $("div#hand1>div.P1front");
+    // playerOneHandCards.addClass("P1back");
+    // game.turn++;
+    // $(".P2back").toggleClass("P2front").toggleClass("P2back");
   }
 });
 
 //check for pairs
 $("#play").on("click", () => {
   let isEqual = allNumbersEqual(comboCheck);
-  if ($(".shiftup").length === 2 && isEqual) {
+  if (
+    $(".shiftup").length === 2 &&
+    isEqual &&
+    comboCheck[0] > currentHighestCardValue
+  ) {
     numCardsInPlay = $(".shiftup").length;
     currentHighestCardValue = comboCheck[0];
     $(".playarea").append($(".shiftup"));
-    $(".P1front").removeClass("shiftup");
+    changeTurn(game.turn);
     comboCheck = [];
-    const playerOneHandCards = $("div#hand1>div.P1front");
-    playerOneHandCards.addClass("P1back");
-    game.turn++;
-    $(".P2back").toggleClass("P2front").toggleClass("P2back");
+    // $(".P1front").removeClass("shiftup");
+    // comboCheck = [];
+    // const playerOneHandCards = $("div#hand1>div.P1front");
+    // playerOneHandCards.addClass("P1back");
+    // $(".P2back").toggleClass("P2front").toggleClass("P2back");
   }
 });
 
