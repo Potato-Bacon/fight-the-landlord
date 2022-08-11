@@ -98,7 +98,6 @@ const addOnClickEvent = ($card) => {
     } else {
       comboCheck.pop();
     }
-    console.log($(".shiftup").length, "length");
     console.log(comboCheck, "comboCheck array");
     comboCheck.sort((a, b) => a - b);
     console.log(comboCheck, "sorted");
@@ -312,7 +311,7 @@ let passClickCount = 0;
 $("#pass").on("click", () => {
   passClickCount++;
   changeTurn(game.turn);
-  if (passClickCount > 2) {
+  if (passClickCount >= 2) {
     currentHighestCardValue = 0;
     numCardsInPlay = 1;
     passClickCount = 0;
