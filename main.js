@@ -166,17 +166,23 @@ const biddingPhase = () => {
   $(".message").append($bidThree);
 
   $bidOne.on("click", () => {
+    $("#bidpoints").text(1);
     $bidOne.hide();
     changeTurn(game.turn);
   });
 
   $bidTwo.on("click", () => {
+    $("#bidpoints").text(2);
     $bidOne.hide();
     $bidTwo.hide();
     changeTurn(game.turn);
   });
 
   $bidThree.on("click", () => {
+    $("#bidpoints").text(3);
+    $bidOne.hide();
+    $bidTwo.hide();
+    $bidThree.hide();
     let playerID = game.turn + 1;
     let index = game.turn;
     $(".landlordback")
