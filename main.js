@@ -70,7 +70,6 @@ const game = {
   ],
   landlordcards: [],
   turn: 0,
-  currentbidder: 0,
   currentwinningbid: 0,
   landlordplayer: 0,
   bidpoints: 0,
@@ -167,19 +166,15 @@ const biddingPhase = () => {
   $(".message").append($bidTwo);
   $(".message").append($bidThree);
 
-  let count = 1;
   $bidOne.on("click", () => {
-    if (game.turn === 0);
     $bidOne.hide();
-    count++;
-    $("#turn").text(count);
+    changeTurn(game.turn);
   });
 
   $bidTwo.on("click", () => {
     $bidOne.hide();
     $bidTwo.hide();
-    count++;
-    $("#turn").text(count);
+    changeTurn(game.turn);
   });
 
   $bidThree.on("click", () => {
@@ -266,7 +261,7 @@ $("#play").on("click", () => {
     $(".shiftup").length === 2 &&
     isEqual &&
     comboCheck[0] > currentHighestCardValue &&
-    $(".shiftup").eq(0).attr("value") == !"16"
+    $(".shiftup").eq(0).attr("value") !== "16"
   ) {
     numCardsInPlay = $(".shiftup").length;
     currentHighestCardValue = comboCheck[0];
@@ -279,10 +274,6 @@ $("#play").on("click", () => {
     // playerOneHandCards.addClass("P1back");
     // $(".P2back").toggleClass("P2front").toggleClass("P2back");
   }
-});
-
-$("#pass").on("click", () => {
-  changeTurn(game.turn);
 });
 
 //check for straights
@@ -316,7 +307,17 @@ $("#play").on("click", () => {
     }
   }
 });
+let passClickCount = 0;
 
+$("#pass").on("click", () => {
+  passClickCount++;
+  changeTurn(game.turn);
+  if (passClickCount > 2) {
+    currentHighestCardValue = 0;
+    numCardsInPlay = 1;
+    passClickCount = 0;
+  }
+});
 //check for triplets
 $("#play").on("click", () => {
   let isEqual = allNumbersEqual(comboCheck);
@@ -370,7 +371,6 @@ $("#play").on("click", () => {
   ) {
     $(".playarea").append($(".shiftup"));
     multiplier = multiplier * 2;
-    console.log(multiplier, "hi");
     $("#multiplier").text(multiplier);
     changeTurn(game.turn);
     comboCheck = [];
@@ -389,9 +389,11 @@ $("#play").on("click", () => {
 
   if ($(".shiftup").length === 5 && isTriple && isPair) {
     $(".playarea").append($(".shiftup"));
+    changeTurn(game.turn);
     comboCheck = [];
-    const playerOneHandCards = $("div#hand1>div.P1front");
-    playerOneHandCards.addClass("P1back");
+    // comboCheck = [];
+    // const playerOneHandCards = $("div#hand1>div.P1front");
+    // playerOneHandCards.addClass("P1back");
   }
 });
 
