@@ -321,6 +321,7 @@ $("#pass").on("click", () => {
     currentHighestCardValue = 0;
     numCardsInPlay = 1;
     passClickCount = 0;
+    $(".playareafront").remove();
   }
 });
 //check for triplets
