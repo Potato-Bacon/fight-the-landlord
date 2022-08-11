@@ -1,4 +1,4 @@
-import $ from "jquery";
+import $, { when } from "jquery";
 
 // declare card elements
 let deck = [
@@ -172,7 +172,7 @@ const biddingPhase = () => {
   let count = 1;
 
   $bidOne.on("click", () => {
-    if (game.turn === 0) changeBidder();
+    if (game.turn === 0);
     $bidOne.hide();
     count++;
     $("#turn").text(count);
@@ -183,7 +183,6 @@ const biddingPhase = () => {
     $bidTwo.hide();
     count++;
     $("#turn").text(count);
-    changeBidder();
   });
 
   $bidThree.on("click", () => {
@@ -206,20 +205,19 @@ const biddingPhase = () => {
   });
 
   $pass.on("click", () => {
-    changeBidder();
     count++;
     $("#turn").text(count);
   });
 };
-const changeBidder = () => {
-  if (game.currentbidder === "P1") {
-    game.currentbidder = "P2";
-    console.log(game.currentbidder, "current bidder");
-  } else if (game.currentbidder === "P2") {
-    game.currentbidder = "P3";
-    console.log(game.currentbidder, "current bidder");
-  }
+
+const changeTurn = (index) => {
+  game.turn++;
+  const playerHandCards = $("div#hand1>div.P" + index + "front");
+  playerHandCards.addClass("P" + index + "back");
 };
+
+const landLordPlayer = () => {};
+
 let comboCheck = [];
 
 biddingPhase();
@@ -250,7 +248,8 @@ $("#play").on("click", () => {
     comboCheck = [];
     const playerOneHandCards = $("div#hand1>div.P1front");
     playerOneHandCards.addClass("P1back");
-    $(".P2back");
+    game.turn++;
+    $(".P2back").toggleClass("P2front").toggleClass("P2back");
   }
 });
 
