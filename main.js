@@ -163,11 +163,9 @@ const biddingPhase = () => {
   const $bidOne = $("<button>").text(1).addClass("biddingphase");
   const $bidTwo = $("<button>").text(2).addClass("biddingphase");
   const $bidThree = $("<button>").text(3).addClass("biddingphase");
-  const $pass = $("<button>").text("pass").addClass("biddingphase");
   $(".message").append($bidOne);
   $(".message").append($bidTwo);
   $(".message").append($bidThree);
-  $(".message").append($pass);
 
   let count = 1;
   $bidOne.on("click", () => {
@@ -186,19 +184,17 @@ const biddingPhase = () => {
 
   $bidThree.on("click", () => {
     let playerID = game.turn + 1;
+    let index = game.turn;
     $(".landlordback")
       .removeClass("landlordback")
-      .addClass("P" + playerID + "front");
+      .addClass("P" + playerID + "front")
+      .attr("player", index);
     $("#hand" + playerID).append($(".P" + playerID + "front"));
+    $("#landlordplayer").text(playerID);
 
     game.players[game.turn].hand.push(game.landlordcards.shift());
     game.players[game.turn].hand.push(game.landlordcards.shift());
     game.players[game.turn].hand.push(game.landlordcards.shift());
-  });
-
-  $pass.on("click", () => {
-    count++;
-    $("#turn").text(count);
   });
 };
 
@@ -222,8 +218,7 @@ const changeTurn = (index) => {
   game.turn = (game.turn + 1) % 3;
 
   let playerid = index + 1;
-  console.log($(".shiftup").length);
-
+  $("#turn").text(game.turn + 1);
   $(".shiftup")
     .addClass("playareafront")
     .removeClass("P" + playerid + "front")
@@ -236,7 +231,7 @@ const changeTurn = (index) => {
   // playerHandCards.addClass("P" + playerid + "back");
 
   let nextPlayerID = game.turn + 1;
-  console.log($(".P" + playerid + "front").length);
+
   $(".P" + playerid + "front").addClass("P" + playerid + "back");
   $(".P" + nextPlayerID + "front").removeClass("P" + nextPlayerID + "back");
 };
@@ -270,7 +265,8 @@ $("#play").on("click", () => {
   if (
     $(".shiftup").length === 2 &&
     isEqual &&
-    comboCheck[0] > currentHighestCardValue
+    comboCheck[0] > currentHighestCardValue &&
+    $(".shiftup").eq(0).attr("value") == !"16"
   ) {
     numCardsInPlay = $(".shiftup").length;
     currentHighestCardValue = comboCheck[0];
@@ -340,6 +336,7 @@ $("#play").on("click", () => {
     // playerOneHandCards.addClass("P1back");
   }
 });
+let multiplier = 1;
 
 //check for bomb
 $("#play").on("click", () => {
@@ -352,6 +349,9 @@ $("#play").on("click", () => {
     numCardsInPlay = $(".shiftup").length;
     currentHighestCardValue = comboCheck[0];
     $(".playarea").append($(".shiftup"));
+    multiplier = multiplier * 2;
+    console.log(multiplier, "hi");
+    $("#multiplier").text(multiplier);
     changeTurn(game.turn);
     comboCheck = [];
     // $(".P1front").removeClass("shiftup");
@@ -369,6 +369,9 @@ $("#play").on("click", () => {
     $(".shiftup").eq(1).attr("value") === "16"
   ) {
     $(".playarea").append($(".shiftup"));
+    multiplier = multiplier * 2;
+    console.log(multiplier, "hi");
+    $("#multiplier").text(multiplier);
     changeTurn(game.turn);
     comboCheck = [];
     // comboCheck = [];
