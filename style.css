@@ -88,6 +88,15 @@ top: 150px
     background-image: url(https://freesvg.org/img/nicubunu_Card_backs_grid_blue.png) !important
 } */
 
+
+.playareafront {
+    background-size : cover;
+    width: 100px;
+    height: 100px;
+    margin-right: -40px;
+}
+
+
 .P1front {
     background-size : cover;
     width: 100px;

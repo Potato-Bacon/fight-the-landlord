@@ -125,22 +125,17 @@ const deckToHand = (index) => {
   game.players[index].hand.push($dealtCard);
   let $player = index + 1;
   let $card = null;
+  $card = $("<div>")
+    .addClass("P" + $player + "back")
+    .addClass("P" + $player + "front")
+    .attr("player", index)
+    .attr("id", $dealtCard.Suit + $dealtCard.Value)
+    .attr("value", $dealtCard.Value);
+  $("#hand" + $player).append($card);
+
   if (game.turn === index) {
-    $card = $("<div>")
-      .addClass("P" + $player + "front")
-
-      .attr("id", $dealtCard.Suit + $dealtCard.Value)
-      .attr("value", $dealtCard.Value);
-    $("#hand" + $player).append($card);
-  } else {
-    $card = $("<div>")
-      .addClass("P" + $player + "back")
-      .attr("id", $dealtCard.Suit + $dealtCard.Value)
-      .attr("value", $dealtCard.Value);
-    $("#hand" + $player).append($card);
+    $card.toggleClass("P" + $player + "back");
   }
-
-  $card.attr("player", index);
 
   addOnClickEvent($card);
 };
@@ -190,12 +185,15 @@ const biddingPhase = () => {
   });
 
   $bidThree.on("click", () => {
-    $(".landlordback").removeClass("landlordback").addClass("P1front");
-    $("#hand1").append($(".P1front"));
+    let playerID = game.turn + 1;
+    $(".landlordback")
+      .removeClass("landlordback")
+      .addClass("P" + playerID + "front");
+    $("#hand" + playerID).append($(".P" + playerID + "front"));
 
-    game.players[0].hand.push(game.landlordcards.shift());
-    game.players[0].hand.push(game.landlordcards.shift());
-    game.players[0].hand.push(game.landlordcards.shift());
+    game.players[game.turn].hand.push(game.landlordcards.shift());
+    game.players[game.turn].hand.push(game.landlordcards.shift());
+    game.players[game.turn].hand.push(game.landlordcards.shift());
   });
 
   $pass.on("click", () => {
@@ -221,24 +219,26 @@ const allNumbersEqual = (arr) => {
 };
 
 const changeTurn = (index) => {
-  index++;
-  $(".P" + index + "front").removeClass("shiftup");
-  const playerHandCards = $("div#hand" + index + ">div.P" + index + "front");
-  playerHandCards.addClass("P" + index + "back");
-  if (index === 3) {
-    game.turn = 0;
-    index = 1;
-    $(".P" + index + "back")
-      .toggleClass("P" + index + "front")
-      .toggleClass("P" + index + "back");
-  } else {
-    index++;
-    game.turn++;
-    // console.log(index, "hi");
-    $(".P" + index + "back")
-      .toggleClass("P" + index + "front")
-      .toggleClass("P" + index + "back");
-  }
+  game.turn = (game.turn + 1) % 3;
+
+  let playerid = index + 1;
+  console.log($(".shiftup").length);
+
+  $(".shiftup")
+    .addClass("playareafront")
+    .removeClass("P" + playerid + "front")
+    .removeClass("P" + playerid + "back")
+    .removeClass("shiftup");
+
+  // const playerHandCards = $(
+  //   "div#hand" + playerid + ">div.P" + playerid + "front"
+  // );
+  // playerHandCards.addClass("P" + playerid + "back");
+
+  let nextPlayerID = game.turn + 1;
+  console.log($(".P" + playerid + "front").length);
+  $(".P" + playerid + "front").addClass("P" + playerid + "back");
+  $(".P" + nextPlayerID + "front").removeClass("P" + nextPlayerID + "back");
 };
 
 let currentHighestCardValue = 0;
