@@ -224,31 +224,49 @@ let comboCheck = [];
 
 biddingPhase();
 
-//check for pairs
-$("#play").on("click", () => {
-  if ($(".shiftup").length === 2 && allNumbersEqual() === true) {
-    // $(".shiftup").eq(0).attr("value") / $(".shiftup").eq(1).attr("value") === 1
-    $(".playarea").append($(".shiftup"));
-    // $(".P1").removeClass("P1front").addClass("P1back");
-  }
-});
-
-const allNumbersEqual = () => {
-  comboCheck.every((element) => {
-    if (element === comboCheck[0]) {
-      console.log("true");
+const allNumbersEqual = (arr) => {
+  return arr.every((element) => {
+    if (element === arr[0]) {
+      // console.log("true");
       return true;
     } else {
-      console.log("false");
+      // console.log("false");
       return false;
     }
   });
 };
+let currentCardValue = 0;
+let numCardsInPlay = 0;
 
-allNumbersEqual();
+//check for singlecard
+$("#play").on("click", () => {
+  if (
+    $(".shiftup").length === 1 &&
+    numCardsInPlay < $(".shiftup").length &&
+    currentCardValue < comboCheck[0]
+  ) {
+    $(".playarea").append($(".shiftup"));
+    $(".P1front").removeClass("shiftup");
+    comboCheck = [];
+    const playerOneHandCards = $("div#hand1>div.P1front");
+    playerOneHandCards.addClass("P1back");
+    $(".P2back");
+  }
+});
+
+//check for pairs
+$("#play").on("click", () => {
+  let isEqual = allNumbersEqual(comboCheck);
+  if ($(".shiftup").length === 2 && isEqual) {
+    $(".playarea").append($(".shiftup"));
+    $(".P1front").removeClass("shiftup");
+    comboCheck = [];
+    const playerOneHandCards = $("div#hand1>div.P1front");
+    playerOneHandCards.addClass("P1back");
+  }
+});
 
 //check for straights
-// const checkStraights = () =>
 $("#play").on("click", () => {
   for (let index = 0; index < comboCheck.length; index++) {
     if (
@@ -256,25 +274,35 @@ $("#play").on("click", () => {
       comboCheck.length >= 5
     ) {
       $(".playarea").append($(".shiftup"));
-      $(".P1").removeClass("P1front").addClass("P1back");
+      $(".P1front").removeClass("shiftup");
+      comboCheck = [];
+      const playerOneHandCards = $("div#hand1>div.P1front");
+      playerOneHandCards.addClass("P1back");
     }
   }
 });
 
 //check for triplets
 $("#play").on("click", () => {
-  if (
-    $(".shiftup").length === 3 &&
-    $(".shiftup").eq(0).attr("value") === $(".shiftup").eq(1).attr("value") &&
-    $(".shiftup").eq(1).attr("value") === $(".shiftup").eq(2).attr("value")
-  ) {
+  let x = allNumbersEqual(comboCheck);
+  if ($(".shiftup").length === 3 && isEqual) {
     $(".playarea").append($(".shiftup"));
     $(".P1front").removeClass("shiftup");
     comboCheck = [];
     const playerOneHandCards = $("div#hand1>div.P1front");
     playerOneHandCards.addClass("P1back");
+  }
+});
 
-    // $(".P1").removeClass("P1front").addClass("P1back");
+//check for bomb
+$("#play").on("click", () => {
+  let isEqual = allNumbersEqual(comboCheck);
+  if ($(".shiftup").length === 4 && isEqual) {
+    $(".playarea").append($(".shiftup"));
+    $(".P1front").removeClass("shiftup");
+    comboCheck = [];
+    const playerOneHandCards = $("div#hand1>div.P1front");
+    playerOneHandCards.addClass("P1back");
   }
 });
 
@@ -282,12 +310,50 @@ $("#play").on("click", () => {
 $("#play").on("click", () => {
   if (
     $(".shiftup").length === 2 &&
-    $(".shiftup").eq(0).attr("value") === $(".shiftup").eq(1).attr("value") &&
-    $(".shiftup").eq(1).attr("value") === $(".shiftup").eq(2).attr("value")
+    $(".shiftup").eq(0).attr("value") === "16" &&
+    $(".shiftup").eq(1).attr("value") === "16"
   ) {
     $(".playarea").append($(".shiftup"));
-    // $(".P1").removeClass("P1front").addClass("P1back");
+    $(".P1front").removeClass("shiftup");
+    comboCheck = [];
+    const playerOneHandCards = $("div#hand1>div.P1front");
+    playerOneHandCards.addClass("P1back");
   }
 });
 
-//check for bomb
+//check for fullhouse
+
+$("#play").on("click", () => {
+  // console.log(comboCheck.slice(0, 3));
+  let isTriple = sliceCardsTriple();
+  console.log(isTriple, "testtriple");
+  let isPair = sliceCardsPair();
+
+  if ($(".shiftup").length === 5 && isTriple && isPair) {
+    $(".playarea").append($(".shiftup"));
+    $(".P1front").removeClass("shiftup");
+    comboCheck = [];
+    const playerOneHandCards = $("div#hand1>div.P1front");
+    playerOneHandCards.addClass("P1back");
+  }
+});
+
+const sliceCardsPair = () => {
+  if (allNumbersEqual(comboCheck.slice(0, 2))) {
+    console.log(comboCheck.slice(0, 2));
+    return comboCheck.slice(0, 2);
+  } else if (allNumbersEqual(comboCheck.slice(3))) {
+    console.log(comboCheck.slice(3));
+    return comboCheck.slice(3);
+  }
+};
+
+const sliceCardsTriple = () => {
+  if (allNumbersEqual(comboCheck.slice(0, 3))) {
+    console.log(comboCheck.slice(0, 3));
+    return comboCheck.slice(0, 3);
+  } else if (allNumbersEqual(comboCheck.slice(2))) {
+    console.log(comboCheck.slice(2));
+    return comboCheck.slice(2);
+  }
+};
