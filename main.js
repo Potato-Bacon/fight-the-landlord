@@ -1,4 +1,4 @@
-import $, { when } from "jquery";
+import $ from "jquery";
 
 // declare card elements
 let deck = [
@@ -210,12 +210,6 @@ const biddingPhase = () => {
   });
 };
 
-const changeTurn = (index) => {
-  game.turn++;
-  const playerHandCards = $("div#hand1>div.P" + index + "front");
-  playerHandCards.addClass("P" + index + "back");
-};
-
 const landLordPlayer = () => {};
 
 let comboCheck = [];
@@ -233,16 +227,23 @@ const allNumbersEqual = (arr) => {
     }
   });
 };
-let currentCardValue = 0;
-let numCardsInPlay = 0;
+const changeTurn = (index) => {
+  game.turn++;
+  const playerHandCards = $("div#hand1>div.P" + (index + 1) + "front");
+  playerHandCards.addClass("P" + index + 1 + "back");
+};
+let currentHighestCardValue = 0;
+let numCardsInPlay = 1;
 
 //check for singlecard
 $("#play").on("click", () => {
   if (
     $(".shiftup").length === 1 &&
-    numCardsInPlay < $(".shiftup").length &&
-    currentCardValue < comboCheck[0]
+    numCardsInPlay === $(".shiftup").length &&
+    comboCheck[0] > currentHighestCardValue
   ) {
+    numCardsInPlay = $(".shiftup").length;
+    currentHighestCardValue = comboCheck[0];
     $(".playarea").append($(".shiftup"));
     $(".P1front").removeClass("shiftup");
     comboCheck = [];
@@ -257,33 +258,52 @@ $("#play").on("click", () => {
 $("#play").on("click", () => {
   let isEqual = allNumbersEqual(comboCheck);
   if ($(".shiftup").length === 2 && isEqual) {
+    numCardsInPlay = $(".shiftup").length;
+    currentHighestCardValue = comboCheck[0];
     $(".playarea").append($(".shiftup"));
     $(".P1front").removeClass("shiftup");
     comboCheck = [];
     const playerOneHandCards = $("div#hand1>div.P1front");
     playerOneHandCards.addClass("P1back");
+    game.turn++;
+    $(".P2back").toggleClass("P2front").toggleClass("P2back");
   }
 });
 
 //check for straights
 $("#play").on("click", () => {
+  let num = 0;
+
+  comboCheck.forEach((element) => {
+    if (num < element) {
+      num = element;
+    }
+  });
+
   for (let index = 0; index < comboCheck.length; index++) {
+    let difference = comboCheck[index + 1] - comboCheck[index];
     if (
-      comboCheck[index + 1] - comboCheck[index] === 1 &&
-      comboCheck.length >= 5
+      comboCheck.length >= 5 &&
+      difference === 1 &&
+      num > currentHighestCardValue
     ) {
+      // comboCheck.slice(-1) > currentHighestCardValue
+      numCardsInPlay = $(".shiftup").length;
+      currentHighestCardValue = num;
       $(".playarea").append($(".shiftup"));
       $(".P1front").removeClass("shiftup");
       comboCheck = [];
       const playerOneHandCards = $("div#hand1>div.P1front");
       playerOneHandCards.addClass("P1back");
+      game.turn++;
+      $(".P2back").toggleClass("P2front").toggleClass("P2back");
     }
   }
 });
 
 //check for triplets
 $("#play").on("click", () => {
-  let x = allNumbersEqual(comboCheck);
+  let isEqual = allNumbersEqual(comboCheck);
   if ($(".shiftup").length === 3 && isEqual) {
     $(".playarea").append($(".shiftup"));
     $(".P1front").removeClass("shiftup");
@@ -325,7 +345,6 @@ $("#play").on("click", () => {
 $("#play").on("click", () => {
   // console.log(comboCheck.slice(0, 3));
   let isTriple = sliceCardsTriple();
-  console.log(isTriple, "testtriple");
   let isPair = sliceCardsPair();
 
   if ($(".shiftup").length === 5 && isTriple && isPair) {
