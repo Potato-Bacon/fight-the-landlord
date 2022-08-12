@@ -18,8 +18,8 @@ Code Snippets
 
 
 
-![Screenshot 2022-08-12 at 9 27 45 AM](https://user-images.githubusercontent.com/100530095/184268746-4d0595f0-99bd-4ca7-b9a9-7112ecc58494.png)
 
+![Screenshot 2022-08-12 at 9 34 33 AM](https://user-images.githubusercontent.com/100530095/184269184-cc56a4af-f7d0-4e76-a29f-6460d45e50d7.png)
 
 
 
@@ -30,4 +30,5 @@ CSS images and class names
 
 
 SEI Post Mortem
-![Screenshot 2022-08-12 at 9 34 33 AM](https://user-images.githubusercontent.com/100530095/184269184-cc56a4af-f7d0-4e76-a29f-6460d45e50d7.png)
+What habits did I use during this unit that helped me?
+What habits did I have during this unit that I can improve on?
