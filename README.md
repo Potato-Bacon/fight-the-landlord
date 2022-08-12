@@ -9,6 +9,15 @@ Game combinations
 
 
 
+Code and Code Design
+
+
+
+![Screenshot 2022-08-12 at 9 46 18 AM](https://user-images.githubusercontent.com/100530095/184270125-75d891c7-a7f5-4da1-ba82-fc0bf7f283b9.png)
+
+
+
+
 
 Code Snippets
 
@@ -25,10 +34,13 @@ Code Snippets
 
 Approach and Process
 1. What in my process and approach to this project would I do differently next time?
+
 CSS images and class names
 
 
 
 SEI Post Mortem
+
 What habits did I use during this unit that helped me?
-What habits did I have during this unit that I can improve on?
+
+
