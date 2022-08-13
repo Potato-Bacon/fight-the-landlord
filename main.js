@@ -195,7 +195,20 @@ const biddingPhase = () => {
     game.players[game.turn].hand.push(game.landlordcards.shift());
     game.players[game.turn].hand.push(game.landlordcards.shift());
     game.players[game.turn].hand.push(game.landlordcards.shift());
+    $(".P" + index + "front").replaceWith(sortCardsValue());
   });
+};
+
+const sortCardsValue = () => {
+  let index = game.turn + 1;
+
+  $(".P" + index + "front")
+    .toArray()
+    .sort((a, b) => {
+      let $aVal = parseInt($(a).attr("value"));
+      let $bVal = parseInt($(b).attr("value"));
+      return $aVal - $bVal;
+    });
 };
 
 let comboCheck = [];
@@ -224,21 +237,16 @@ const changeTurn = (index) => {
     .removeClass("P" + playerid + "front")
     .removeClass("P" + playerid + "back")
     .removeClass("shiftup");
-
-  // const playerHandCards = $(
-  //   "div#hand" + playerid + ">div.P" + playerid + "front"
-  // );
-  // playerHandCards.addClass("P" + playerid + "back");
+  checkWinCondition();
 
   let nextPlayerID = game.turn + 1;
 
   $(".P" + playerid + "front").addClass("P" + playerid + "back");
   $(".P" + nextPlayerID + "front").removeClass("P" + nextPlayerID + "back");
 };
+let passClickCount = 0;
 
 $("#pass").on("click", () => {
-  let passClickCount = 0;
-
   passClickCount++;
   changeTurn(game.turn);
   if (passClickCount >= 2) {
@@ -263,12 +271,7 @@ $("#play").on("click", () => {
     currentHighestCardValue = comboCheck[0];
     $(".playarea").append($(".shiftup"));
     changeTurn(game.turn);
-    // $(".P1front").removeClass("shiftup");
     comboCheck = [];
-    // const playerOneHandCards = $("div#hand1>div.P1front");
-    // playerOneHandCards.addClass("P1back");
-    // game.turn++;
-    // $(".P2back").toggleClass("P2front").toggleClass("P2back");
   }
 });
 
@@ -441,3 +444,12 @@ const largestNumber = (arr) => {
 // [3,3,3,4,4,4] (slice(0,3))  (slice(-3))
 // [4,4,4,5,5,5,6,6,6] (slice(0,3)) (slice(3,6)) (slice(-3))
 // [5,5,5,6,6,6,7,7,7,8,8,8] (slice(0,3)) (slice(3,6))  (slice(6,9)) (slice(-3))
+
+//check for win condition
+
+const checkWinCondition = () => {
+  let index = game.turn + 1;
+  if ($(".P" + index + "front").length === 0) {
+    console.log("You win");
+  }
+};
