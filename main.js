@@ -55,7 +55,7 @@ let deck = [
   { Value: 12, Suit: "Heart" },
   { Value: 13, Suit: "Heart" },
   { Value: 16, Suit: "Black" },
-  { Value: 16, Suit: "Red" },
+  { Value: 17, Suit: "Red" },
 ];
 
 // number of players
@@ -236,6 +236,19 @@ const changeTurn = (index) => {
   $(".P" + nextPlayerID + "front").removeClass("P" + nextPlayerID + "back");
 };
 
+$("#pass").on("click", () => {
+  let passClickCount = 0;
+
+  passClickCount++;
+  changeTurn(game.turn);
+  if (passClickCount >= 2) {
+    currentHighestCardValue = 0;
+    numCardsInPlay = 1;
+    passClickCount = 0;
+    $(".playareafront").remove();
+  }
+});
+
 let currentHighestCardValue = 0;
 let numCardsInPlay = 1;
 
@@ -283,13 +296,7 @@ $("#play").on("click", () => {
 
 //check for straights
 $("#play").on("click", () => {
-  let num = 0;
-
-  comboCheck.forEach((element) => {
-    if (num < element) {
-      num = element;
-    }
-  });
+  largestNumber(comboCheck);
 
   for (let index = 0; index < comboCheck.length; index++) {
     let difference = comboCheck[index + 1] - comboCheck[index];
@@ -304,26 +311,10 @@ $("#play").on("click", () => {
       $(".playarea").append($(".shiftup"));
       changeTurn(game.turn);
       comboCheck = [];
-      // $(".P1front").removeClass("shiftup");
-      // const playerOneHandCards = $("div#hand1>div.P1front");
-      // playerOneHandCards.addClass("P1back");
-      // game.turn++;
-      // $(".P2back").toggleClass("P2front").toggleClass("P2back");
     }
   }
 });
-let passClickCount = 0;
 
-$("#pass").on("click", () => {
-  passClickCount++;
-  changeTurn(game.turn);
-  if (passClickCount >= 2) {
-    currentHighestCardValue = 0;
-    numCardsInPlay = 1;
-    passClickCount = 0;
-    $(".playareafront").remove();
-  }
-});
 //check for triplets
 $("#play").on("click", () => {
   let isEqual = allNumbersEqual(comboCheck);
@@ -337,12 +328,9 @@ $("#play").on("click", () => {
     $(".playarea").append($(".shiftup"));
     changeTurn(game.turn);
     comboCheck = [];
-    // $(".P1front").removeClass("shiftup");
-    // comboCheck = [];
-    // const playerOneHandCards = $("div#hand1>div.P1front");
-    // playerOneHandCards.addClass("P1back");
   }
 });
+
 let multiplier = 1;
 
 //check for bomb
@@ -361,10 +349,6 @@ $("#play").on("click", () => {
     $("#multiplier").text(multiplier);
     changeTurn(game.turn);
     comboCheck = [];
-    // $(".P1front").removeClass("shiftup");
-    // comboCheck = [];
-    // const playerOneHandCards = $("div#hand1>div.P1front");
-    // playerOneHandCards.addClass("P1back");
   }
 });
 
@@ -373,16 +357,15 @@ $("#play").on("click", () => {
   if (
     $(".shiftup").length === 2 &&
     $(".shiftup").eq(0).attr("value") === "16" &&
-    $(".shiftup").eq(1).attr("value") === "16"
+    $(".shiftup").eq(1).attr("value") === "17"
   ) {
+    numCardsInPlay = $(".shiftup").length;
+    currentHighestCardValue = comboCheck[1];
     $(".playarea").append($(".shiftup"));
     multiplier = multiplier * 2;
     $("#multiplier").text(multiplier);
     changeTurn(game.turn);
     comboCheck = [];
-    // comboCheck = [];
-    // const playerOneHandCards = $("div#hand1>div.P1front");
-    // playerOneHandCards.addClass("P1back");
   }
 });
 
@@ -397,12 +380,10 @@ $("#play").on("click", () => {
     $(".playarea").append($(".shiftup"));
     changeTurn(game.turn);
     comboCheck = [];
-    // comboCheck = [];
-    // const playerOneHandCards = $("div#hand1>div.P1front");
-    // playerOneHandCards.addClass("P1back");
   }
 });
 
+//function to check if array is pairs for fullhouse cards
 const sliceCardsPair = () => {
   if (allNumbersEqual(comboCheck.slice(0, 2))) {
     console.log(comboCheck.slice(0, 2));
@@ -412,7 +393,7 @@ const sliceCardsPair = () => {
     return comboCheck.slice(3);
   }
 };
-
+//function to check if array is triplets for fullhouse cards
 const sliceCardsTriple = () => {
   if (allNumbersEqual(comboCheck.slice(0, 3))) {
     console.log(comboCheck.slice(0, 3));
@@ -422,3 +403,41 @@ const sliceCardsTriple = () => {
     return comboCheck.slice(2);
   }
 };
+
+//check for 3 of a kind sequence
+// 6 cards minimally
+// at least 2 triplets in sequence
+// 6, 9, 12
+
+$("#play").on("click", () => {
+  let isEqual = allNumbersEqual(comboCheck);
+
+  if (
+    $(".shiftup").length === 6 ||
+    $(".shiftup").length === 9 ||
+    $(".shiftup").length === 12
+  ) {
+    if (isEqual && comboCheck[0] > currentHighestCardValue) {
+      numCardsInPlay = $(".shiftup").length;
+      currentHighestCardValue = comboCheck[0];
+      $(".playarea").append($(".shiftup"));
+      changeTurn(game.turn);
+      comboCheck = [];
+    }
+  }
+});
+let num = 0;
+
+//function for largest number
+const largestNumber = (arr) => {
+  arr.forEach((element) => {
+    if (num < element) {
+      num = element;
+    }
+  });
+};
+
+//pseudo code for 3 of a kind sequence for equal numbers
+// [3,3,3,4,4,4] (slice(0,3))  (slice(-3))
+// [4,4,4,5,5,5,6,6,6] (slice(0,3)) (slice(3,6)) (slice(-3))
+// [5,5,5,6,6,6,7,7,7,8,8,8] (slice(0,3)) (slice(3,6))  (slice(6,9)) (slice(-3))
