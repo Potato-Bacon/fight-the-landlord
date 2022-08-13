@@ -237,6 +237,7 @@ const changeTurn = (index) => {
     .removeClass("P" + playerid + "front")
     .removeClass("P" + playerid + "back")
     .removeClass("shiftup");
+  console.log($(".P" + playerid + "front").length);
   checkWinCondition();
 
   let nextPlayerID = game.turn + 1;
@@ -260,10 +261,30 @@ $("#pass").on("click", () => {
 let currentHighestCardValue = 0;
 let numCardsInPlay = 1;
 
-//check for singlecard
+const noCardsPlayed = (num) => {
+  if ($(".playareafront").length === 0) {
+    numCardsInPlay = numCardsInPlay + num;
+  }
+};
+
 $("#play").on("click", () => {
+  if ($(".shiftup").length === 1) {
+    singleCard();
+  } else if ($(".shiftup").length === 2) {
+    pairs();
+    rockets();
+  } else if ($(".shiftup").length === 3) {
+    triplets();
+  } else if ($(".shiftup").length === 5) {
+    straights();
+    fullHouse();
+  } else if ($(".shiftup").length === 4) {
+    bombs();
+  }
+});
+
+const singleCard = () => {
   if (
-    $(".shiftup").length === 1 &&
     numCardsInPlay === $(".shiftup").length &&
     comboCheck[0] > currentHighestCardValue
   ) {
@@ -273,40 +294,40 @@ $("#play").on("click", () => {
     changeTurn(game.turn);
     comboCheck = [];
   }
-});
+};
+
+//check for singlecard
 
 //check for pairs
-$("#play").on("click", () => {
+const pairs = () => {
   let isEqual = allNumbersEqual(comboCheck);
+  noCardsPlayed(1);
   if (
     $(".shiftup").length === 2 &&
     isEqual &&
     comboCheck[0] > currentHighestCardValue &&
-    $(".shiftup").eq(0).attr("value") !== "16"
+    $(".shiftup").eq(0).attr("value") !== "16" &&
+    $(".shiftup").length === numCardsInPlay
   ) {
     numCardsInPlay = $(".shiftup").length;
     currentHighestCardValue = comboCheck[0];
     $(".playarea").append($(".shiftup"));
     changeTurn(game.turn);
     comboCheck = [];
-    // $(".P1front").removeClass("shiftup");
-    // comboCheck = [];
-    // const playerOneHandCards = $("div#hand1>div.P1front");
-    // playerOneHandCards.addClass("P1back");
-    // $(".P2back").toggleClass("P2front").toggleClass("P2back");
   }
-});
+};
 
 //check for straights
-$("#play").on("click", () => {
+const straights = () => {
   largestNumber(comboCheck);
-
+  noCardsPlayed(4);
   for (let index = 0; index < comboCheck.length; index++) {
     let difference = comboCheck[index + 1] - comboCheck[index];
     if (
       $(".shiftup").length === 5 &&
       difference === 1 &&
-      num > currentHighestCardValue
+      num > currentHighestCardValue &&
+      $(".shiftup").length === numCardsInPlay
     ) {
       // comboCheck.slice(-1) > currentHighestCardValue
       numCardsInPlay = $(".shiftup").length;
@@ -316,15 +337,17 @@ $("#play").on("click", () => {
       comboCheck = [];
     }
   }
-});
+};
 
 //check for triplets
-$("#play").on("click", () => {
+const triplets = () => {
   let isEqual = allNumbersEqual(comboCheck);
+  noCardsPlayed(2);
   if (
     $(".shiftup").length === 3 &&
     isEqual &&
-    comboCheck[0] > currentHighestCardValue
+    comboCheck[0] > currentHighestCardValue &&
+    $(".shiftup").length === numCardsInPlay
   ) {
     numCardsInPlay = $(".shiftup").length;
     currentHighestCardValue = comboCheck[0];
@@ -332,12 +355,12 @@ $("#play").on("click", () => {
     changeTurn(game.turn);
     comboCheck = [];
   }
-});
+};
 
 let multiplier = 1;
 
 //check for bomb
-$("#play").on("click", () => {
+const bombs = () => {
   let isEqual = allNumbersEqual(comboCheck);
   if (
     $(".shiftup").length === 4 &&
@@ -353,10 +376,10 @@ $("#play").on("click", () => {
     changeTurn(game.turn);
     comboCheck = [];
   }
-});
+};
 
 //check for rocket
-$("#play").on("click", () => {
+const rockets = () => {
   if (
     $(".shiftup").length === 2 &&
     $(".shiftup").eq(0).attr("value") === "16" &&
@@ -370,21 +393,23 @@ $("#play").on("click", () => {
     changeTurn(game.turn);
     comboCheck = [];
   }
-});
+};
 
 //check for fullhouse
 
-$("#play").on("click", () => {
+const fullHouse = () => {
   // console.log(comboCheck.slice(0, 3));
   let isTriple = sliceCardsTriple();
   let isPair = sliceCardsPair();
-
+  noCardsPlayed(4);
   if ($(".shiftup").length === 5 && isTriple && isPair) {
+    numCardsInPlay = $(".shiftup").length;
+    currentHighestCardValue = comboCheck[4];
     $(".playarea").append($(".shiftup"));
     changeTurn(game.turn);
     comboCheck = [];
   }
-});
+};
 
 //function to check if array is pairs for fullhouse cards
 const sliceCardsPair = () => {
